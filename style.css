@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0e0e0e;
+  color: #e8e8e8;
+  font-family: 'Georgia', serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  max-width: 700px;
+  width: 90%;
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+}
+
+#subtitle {
+  font-size: 0.95rem;
+  color: #888;
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e8e8e8;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus {
+  border-color: #666;
+}
+
+button {
+  padding: 12px 32px;
+  background: transparent;
+  border: 1px solid #555;
+  color: #e8e8e8;
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+button:hover {
+  border-color: #aaa;
+  color: #fff;
+}
+
+#loading {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+#error {
+  color: #a05050;
+  font-size: 0.9rem;
+}
+
+#delta-display {
+  font-size: 1.1rem;
+  color: #aaa;
+  line-height: 1.8;
+}
+
+#delta-display span {
+  color: #e8e8e8;
+  font-size: 1.4rem;
+}
+
+#painting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+#painting-img {
+  max-width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+}
+
+#painting-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+#painting-artist {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+#painting-caption {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  max-width: 460px;
+  line-height: 1.7;
+}

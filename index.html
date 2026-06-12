@@ -3,140 +3,365 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painted Near You</title>
+  <title>How Are You Feeling</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #0e0e0e; color: #e8e8e8; font-family: 'Georgia', serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    #container { max-width: 700px; width: 90%; padding: 60px 0; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
-    h1 { font-size: 2rem; font-weight: normal; letter-spacing: 0.1em; }
-    #subtitle { font-size: 0.95rem; color: #888; line-height: 1.7; max-width: 500px; }
-    input { width: 100%; padding: 14px 18px; background: #1a1a1a; border: 1px solid #333; color: #e8e8e8; font-family: 'Georgia', serif; font-size: 1rem; outline: none; }
-    input:focus { border-color: #666; }
-    button { padding: 12px 32px; background: transparent; border: 1px solid #555; color: #e8e8e8; font-family: 'Georgia', serif; font-size: 0.9rem; letter-spacing: 0.08em; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
-    button:hover { border-color: #aaa; color: #fff; }
-    #loading { color: #666; font-size: 0.9rem; font-style: italic; }
-    #error { color: #a05050; font-size: 0.9rem; }
-    #location-display { font-size: 0.85rem; color: #666; font-style: italic; }
-    #painting-container { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 8px; }
-    #painting-img { max-width: 100%; max-height: 540px; object-fit: contain; }
-    #painting-title { font-size: 1.1rem; letter-spacing: 0.05em; }
-    #painting-artist { font-size: 0.85rem; color: #777; }
-    #painting-date { font-size: 0.8rem; color: #555; }
-    #painting-caption { font-size: 0.85rem; color: #666; font-style: italic; max-width: 460px; line-height: 1.7; margin-top: 4px; }
+
+    body {
+      background-color: #f5f0ea;
+      color: #5a4f47;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    #container {
+      max-width: 640px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: #7a6e64;
+    }
+
+    #subtitle {
+      font-size: 1rem;
+      color: #a09080;
+      line-height: 1.8;
+      font-style: italic;
+      max-width: 420px;
+    }
+
+    #mood-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 500px;
+    }
+
+    .mood-btn {
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid #c4b8ad;
+      color: #7a6e64;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+
+    .mood-btn:hover {
+      border-color: #9a8880;
+      color: #5a4f47;
+    }
+
+    .mood-btn.selected {
+      background: #e8ddd4;
+      border-color: #9a8880;
+      color: #3a2f27;
+    }
+
+    #custom-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #c4b8ad;
+      color: #5a4f47;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      outline: none;
+    }
+
+    input::placeholder { color: #c4b8ad; }
+    input:focus { border-bottom-color: #9a8880; }
+
+    #find-btn {
+      padding: 10px 28px;
+      background: transparent;
+      border: 1px solid #c4b8ad;
+      color: #7a6e64;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+
+    #find-btn:hover { border-color: #9a8880; color: #5a4f47; }
+
+    #loading {
+      color: #a09080;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    #error { color: #b07060; font-size: 0.9rem; font-style: italic; }
+
+    #result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    #mood-display {
+      font-size: 0.85rem;
+      color: #b0a090;
+      font-style: italic;
+      letter-spacing: 0.05em;
+    }
+
+    #painting-img {
+      max-width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      filter: sepia(15%) saturate(85%);
+      border: 1px solid #ddd4c8;
+    }
+
+    #painting-title {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #5a4f47;
+      letter-spacing: 0.05em;
+    }
+
+    #painting-artist {
+      font-size: 0.9rem;
+      color: #a09080;
+    }
+
+    #painting-date {
+      font-size: 0.8rem;
+      color: #c4b8ad;
+    }
+
+    #painting-caption {
+      font-size: 0.9rem;
+      color: #9a8880;
+      font-style: italic;
+      max-width: 440px;
+      line-height: 1.8;
+    }
+
+    #try-again {
+      margin-top: 8px;
+      padding: 8px 22px;
+      background: transparent;
+      border: 1px solid #c4b8ad;
+      color: #a09080;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    #try-again:hover { border-color: #9a8880; color: #5a4f47; }
   </style>
 </head>
 <body>
   <div id="container">
-    <h1>Painted Near You</h1>
-    <p id="subtitle">Enter your address. See how artists once saw where you are.</p>
+    <h1>How Are You Feeling</h1>
+    <p id="subtitle">Choose one or more. Or write your own. Find the painting that holds it.</p>
 
-    <input type="text" id="address" placeholder="Enter your address or city" />
-    <button id="btn">Find my painting</button>
+    <div id="mood-grid"></div>
 
-    <div id="loading" style="display:none">Looking up your location...</div>
+    <div id="custom-row">
+      <input type="text" id="custom-mood" placeholder="or type your own word..." />
+    </div>
+
+    <button id="find-btn" onclick="run()">Find my painting</button>
+
+    <div id="loading" style="display:none">Looking for your painting...</div>
     <div id="error" style="display:none"></div>
 
     <div id="result" style="display:none">
-      <div id="location-display"></div>
-      <div id="painting-container">
-        <img id="painting-img" src="" alt="" />
-        <div id="painting-title"></div>
-        <div id="painting-artist"></div>
-        <div id="painting-date"></div>
-        <div id="painting-caption"></div>
-      </div>
+      <div id="mood-display"></div>
+      <img id="painting-img" src="" alt="" />
+      <div id="painting-title"></div>
+      <div id="painting-artist"></div>
+      <div id="painting-date"></div>
+      <div id="painting-caption"></div>
+      <button id="try-again" onclick="tryAgain()">find another</button>
     </div>
   </div>
 
   <script>
-    document.getElementById('btn').addEventListener('click', run);
+    const ALL_MOODS = [
+      { word: "melancholy", artist: "Caspar David Friedrich" },
+      { word: "restless", artist: "Eugene Delacroix" },
+      { word: "tender", artist: "Mary Cassatt" },
+      { word: "ecstatic", artist: "El Greco" },
+      { word: "afraid", artist: "Francisco Goya" },
+      { word: "lonely", artist: "Edward Hopper" },
+      { word: "reverent", artist: "Rembrandt" },
+      { word: "furious", artist: "Peter Paul Rubens" },
+      { word: "hopeful", artist: "Camille Corot" },
+      { word: "grief", artist: "Giovanni Bellini" },
+      { word: "serene", artist: "Johannes Vermeer" },
+      { word: "anxious", artist: "James Ensor" },
+      { word: "nostalgic", artist: "Winslow Homer" },
+      { word: "defiant", artist: "Jacques-Louis David" },
+      { word: "dreaming", artist: "Odilon Redon" },
+      { word: "exhausted", artist: "Honore Daumier" },
+      { word: "in love", artist: "Pierre-Auguste Renoir" },
+      { word: "bitter", artist: "Gustave Courbet" },
+      { word: "awestruck", artist: "Frederic Edwin Church" },
+      { word: "lost", artist: "George Frederick Watts" },
+      { word: "euphoric", artist: "Henri Matisse" },
+      { word: "ashamed", artist: "Domenico Ghirlandaio" },
+      { word: "grateful", artist: "Jean-Baptiste-Simeon Chardin" },
+      { word: "numb", artist: "Vilhelm Hammershoi" },
+      { word: "jealous", artist: "Edvard Munch" },
+      { word: "homesick", artist: "Thomas Cole" },
+      { word: "proud", artist: "John Singer Sargent" },
+      { word: "humiliated", artist: "William Hogarth" },
+      { word: "curious", artist: "Jan Steen" },
+      { word: "devastated", artist: "Gustave Moreau" },
+      { word: "content", artist: "Pieter de Hooch" },
+      { word: "hollow", artist: "Giorgio de Chirico" },
+      { word: "desperate", artist: "Theodore Gericault" },
+      { word: "alive", artist: "Vincent van Gogh" },
+      { word: "forgotten", artist: "James McNeill Whistler" },
+      { word: "dangerous", artist: "Caravaggio" },
+      { word: "suffocated", artist: "Henry Fuseli" },
+      { word: "electric", artist: "Joseph Mallord William Turner" },
+      { word: "small", artist: "Caspar David Friedrich" },
+      { word: "hollow", artist: "Giorgio de Chirico" }
+    ];
 
-    async function geocode(address) {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&addressdetails=1`;
-      const res = await fetch(url, {
-        headers: { 'Accept-Language': 'en', 'User-Agent': 'painted-near-you' }
-      });
-      const data = await res.json();
-      if (!data || data.length === 0) throw new Error("Address not found. Try a city name instead.");
-      const addr = data[0].address;
-      return {
-        lat: parseFloat(data[0].lat),
-        lon: parseFloat(data[0].lon),
-        neighborhood: addr.neighbourhood || addr.suburb || null,
-        city: addr.city || addr.town || addr.village || null,
-        county: addr.county || null,
-        state: addr.state || null,
-        country: addr.country || null
-      };
+    let selectedMoods = [];
+    let lastSearchTerms = [];
+
+    function shuffle(arr) {
+      return arr.sort(() => Math.random() - 0.5);
     }
 
-    async function searchMetForPainting(query) {
-      const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&medium=Paintings&q=${encodeURIComponent(query)}`;
+    function buildMoodGrid() {
+      const grid = document.getElementById('mood-grid');
+      grid.innerHTML = '';
+      const picked = shuffle([...ALL_MOODS]).slice(0, 5);
+      picked.forEach(mood => {
+        const btn = document.createElement('button');
+        btn.className = 'mood-btn';
+        btn.textContent = mood.word;
+        btn.dataset.word = mood.word;
+        btn.dataset.artist = mood.artist;
+        btn.addEventListener('click', () => toggleMood(btn, mood));
+        grid.appendChild(btn);
+      });
+    }
+
+    function toggleMood(btn, mood) {
+      const idx = selectedMoods.findIndex(m => m.word === mood.word);
+      if (idx === -1) {
+        selectedMoods.push(mood);
+        btn.classList.add('selected');
+      } else {
+        selectedMoods.splice(idx, 1);
+        btn.classList.remove('selected');
+      }
+    }
+
+    async function searchMetForPainting(artist) {
+      const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&medium=Paintings&q=${encodeURIComponent(artist)}`;
       const res = await fetch(url);
       const data = await res.json();
       if (!data.objectIDs || data.objectIDs.length === 0) return null;
-      const candidates = data.objectIDs.sort(() => Math.random() - 0.5).slice(0, 15);
+      const candidates = shuffle([...data.objectIDs]).slice(0, 20);
       for (const id of candidates) {
         const objRes = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);
         const obj = await objRes.json();
-        if (obj.primaryImageSmall && obj.primaryImageSmall !== '') {
-          return { painting: obj, searchTerm: query };
-        }
+        if (obj.primaryImageSmall && obj.primaryImageSmall !== '') return obj;
       }
       return null;
     }
 
-    async function findPainting(location) {
-      const searchTerms = [
-        location.neighborhood,
-        location.city,
-        location.county,
-        location.state,
-        location.country
-      ].filter(Boolean);
+    function getMoodEntry(word) {
+      const match = ALL_MOODS.find(m => m.word.toLowerCase() === word.toLowerCase());
+      if (match) return match;
+      // fallback mapping for custom words
+      const fallbacks = [
+        "Rembrandt", "Johannes Vermeer", "Vincent van Gogh",
+        "Caspar David Friedrich", "Mary Cassatt"
+      ];
+      return { word, artist: fallbacks[Math.floor(Math.random() * fallbacks.length)] };
+    }
 
-      for (const term of searchTerms) {
-        const result = await searchMetForPainting(term);
-        if (result) return result;
-      }
-      return null;
+    function buildCaption(moods, painting) {
+      const moodStr = moods.map(m => m.word).join(" and ");
+      const artist = painting.artistDisplayName || "An unknown artist";
+      const date = painting.objectDate || "an unknown date";
+      return `${artist}, ${date}. You said you were feeling ${moodStr}.`;
     }
 
     async function run() {
-      const address = document.getElementById('address').value.trim();
-      if (!address) return;
+      const customWord = document.getElementById('custom-mood').value.trim();
+      let allSelected = [...selectedMoods];
+      if (customWord) allSelected.push(getMoodEntry(customWord));
+      if (allSelected.length === 0) {
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = 'Select a mood or type your own.';
+        return;
+      }
+
+      lastSearchTerms = allSelected;
 
       const loading = document.getElementById('loading');
       const error = document.getElementById('error');
       const result = document.getElementById('result');
 
       loading.style.display = 'block';
-      loading.textContent = 'Looking up your location...';
+      loading.textContent = 'Looking for your painting...';
       error.style.display = 'none';
       result.style.display = 'none';
 
       try {
-        const location = await geocode(address);
-        loading.textContent = 'Searching for a painting near you...';
+        // use the first selected mood's artist as primary search
+        const primary = allSelected[0];
+        const painting = await searchMetForPainting(primary.artist);
+        if (!painting) throw new Error("Couldn't find a painting. Try a different mood.");
 
-        const found = await findPainting(location);
-        if (!found) throw new Error("No painting found for your area. Try a nearby city or region.");
-
-        const { painting, searchTerm } = found;
-        const locationParts = [location.city, location.state, location.country].filter(Boolean);
-
-        document.getElementById('location-display').textContent =
-          `Searching near: ${locationParts.join(', ')} — matched on "${searchTerm}"`;
+        const moodStr = allSelected.map(m => m.word).join(", ");
+        document.getElementById('mood-display').textContent = moodStr;
         document.getElementById('painting-img').src = painting.primaryImageSmall;
         document.getElementById('painting-img').alt = painting.title;
         document.getElementById('painting-title').textContent = painting.title;
-        document.getElementById('painting-artist').textContent = painting.artistDisplayName || 'Unknown artist';
+        document.getElementById('painting-artist').textContent = painting.artistDisplayName || '';
         document.getElementById('painting-date').textContent = painting.objectDate || '';
-        document.getElementById('painting-caption').textContent =
-          `${painting.artistDisplayName || 'An unknown artist'} painted this in ${painting.objectDate || 'an unknown date'} — a place that shares its name with somewhere near you.`;
+        document.getElementById('painting-caption').textContent = buildCaption(allSelected, painting);
 
         loading.style.display = 'none';
-        result.style.display = 'block';
+        result.style.display = 'flex';
 
       } catch (err) {
         loading.style.display = 'none';
@@ -144,6 +369,36 @@
         error.textContent = err.message;
       }
     }
+
+    async function tryAgain() {
+      if (lastSearchTerms.length === 0) return;
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('loading').textContent = 'Finding another...';
+
+      try {
+        const primary = lastSearchTerms[0];
+        const painting = await searchMetForPainting(primary.artist);
+        if (!painting) throw new Error("Couldn't find another painting. Try a different mood.");
+
+        document.getElementById('painting-img').src = painting.primaryImageSmall;
+        document.getElementById('painting-img').alt = painting.title;
+        document.getElementById('painting-title').textContent = painting.title;
+        document.getElementById('painting-artist').textContent = painting.artistDisplayName || '';
+        document.getElementById('painting-date').textContent = painting.objectDate || '';
+        document.getElementById('painting-caption').textContent = buildCaption(lastSearchTerms, painting);
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('result').style.display = 'flex';
+
+      } catch (err) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = err.message;
+      }
+    }
+
+    buildMoodGrid();
   </script>
 </body>
 </html>

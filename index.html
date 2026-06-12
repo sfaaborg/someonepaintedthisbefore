@@ -63,10 +63,7 @@
       transition: all 0.2s;
     }
 
-    .mood-btn:hover {
-      border-color: #777;
-      color: #e8e8e8;
-    }
+    .mood-btn:hover { border-color: #777; color: #e8e8e8; }
 
     .mood-btn.selected {
       border-color: #aaa;
@@ -106,17 +103,8 @@
 
     #find-btn:hover { border-color: #aaa; }
 
-    #loading {
-      color: #555;
-      font-size: 1.05rem;
-      font-style: italic;
-    }
-
-    #error {
-      color: #a05050;
-      font-size: 1rem;
-      font-style: italic;
-    }
+    #loading { color: #555; font-size: 1.05rem; font-style: italic; }
+    #error { color: #a05050; font-size: 1rem; font-style: italic; }
 
     #result {
       display: flex;
@@ -126,34 +114,13 @@
       width: 100%;
     }
 
-    #mood-display {
-      font-size: 0.95rem;
-      color: #555;
-      font-style: italic;
-      letter-spacing: 0.06em;
-    }
+    #mood-display { font-size: 0.95rem; color: #555; font-style: italic; letter-spacing: 0.06em; }
 
-    #painting-img {
-      max-width: 100%;
-      max-height: 540px;
-      object-fit: contain;
-    }
+    #painting-img { max-width: 100%; max-height: 540px; object-fit: contain; }
 
-    #painting-title {
-      font-size: 1.4rem;
-      color: #e8e8e8;
-      letter-spacing: 0.04em;
-    }
-
-    #painting-artist {
-      font-size: 1rem;
-      color: #666;
-    }
-
-    #painting-date {
-      font-size: 0.85rem;
-      color: #444;
-    }
+    #painting-title { font-size: 1.4rem; color: #e8e8e8; letter-spacing: 0.04em; }
+    #painting-artist { font-size: 1rem; color: #666; }
+    #painting-date { font-size: 0.85rem; color: #444; }
 
     #painting-caption {
       font-size: 1rem;
@@ -186,7 +153,6 @@
     <div id="mood-grid"></div>
 
     <input type="text" id="custom-mood" placeholder="or type your own word" />
-
     <button id="find-btn">Find my painting</button>
 
     <div id="loading" style="display:none">Looking...</div>
@@ -205,55 +171,64 @@
 
   <script>
     const ALL_MOODS = [
-      { word: "melancholy", artist: "Caspar David Friedrich" },
-      { word: "restless", artist: "Eugene Delacroix" },
-      { word: "tender", artist: "Mary Cassatt" },
-      { word: "ecstatic", artist: "El Greco" },
-      { word: "afraid", artist: "Francisco Goya" },
-      { word: "lonely", artist: "Edward Hopper" },
-      { word: "reverent", artist: "Rembrandt" },
-      { word: "furious", artist: "Peter Paul Rubens" },
-      { word: "hopeful", artist: "Camille Corot" },
-      { word: "grief", artist: "Giovanni Bellini" },
-      { word: "serene", artist: "Johannes Vermeer" },
-      { word: "anxious", artist: "James Ensor" },
-      { word: "nostalgic", artist: "Winslow Homer" },
-      { word: "defiant", artist: "Jacques-Louis David" },
-      { word: "dreaming", artist: "Odilon Redon" },
-      { word: "exhausted", artist: "Honore Daumier" },
-      { word: "in love", artist: "Pierre-Auguste Renoir" },
-      { word: "bitter", artist: "Gustave Courbet" },
-      { word: "awestruck", artist: "Frederic Edwin Church" },
-      { word: "lost", artist: "George Frederick Watts" },
-      { word: "euphoric", artist: "Henri Matisse" },
-      { word: "ashamed", artist: "Domenico Ghirlandaio" },
-      { word: "grateful", artist: "Jean-Baptiste-Simeon Chardin" },
-      { word: "numb", artist: "Vilhelm Hammershoi" },
-      { word: "jealous", artist: "Edvard Munch" },
-      { word: "homesick", artist: "Thomas Cole" },
-      { word: "proud", artist: "John Singer Sargent" },
-      { word: "humiliated", artist: "William Hogarth" },
-      { word: "curious", artist: "Jan Steen" },
-      { word: "devastated", artist: "Gustave Moreau" },
-      { word: "content", artist: "Pieter de Hooch" },
-      { word: "hollow", artist: "Giorgio de Chirico" },
-      { word: "desperate", artist: "Theodore Gericault" },
-      { word: "alive", artist: "Vincent van Gogh" },
-      { word: "forgotten", artist: "James McNeill Whistler" },
-      { word: "dangerous", artist: "Caravaggio" },
-      { word: "suffocated", artist: "Henry Fuseli" },
-      { word: "electric", artist: "Joseph Mallord William Turner" },
-      { word: "small", artist: "Caspar David Friedrich" },
-      { word: "humiliated", artist: "William Hogarth" }
+      { word: "melancholy",   query: "solitude figure window interior" },
+      { word: "restless",     query: "storm turbulent sea waves" },
+      { word: "tender",       query: "mother child embrace" },
+      { word: "ecstatic",     query: "ascension light heavenly figures" },
+      { word: "afraid",       query: "darkness shadow figure fear" },
+      { word: "lonely",       query: "figure alone empty room" },
+      { word: "reverent",     query: "prayer candlelight worship" },
+      { word: "furious",      query: "battle violence struggle figures" },
+      { word: "hopeful",      query: "sunrise landscape morning light" },
+      { word: "grief",        query: "mourning lamentation death figures" },
+      { word: "serene",       query: "quiet interior woman reading light" },
+      { word: "anxious",      query: "crowd city night figures" },
+      { word: "nostalgic",    query: "harvest field rural figures" },
+      { word: "defiant",      query: "portrait standing figure commanding" },
+      { word: "dreaming",     query: "sleeping figure flowers ethereal" },
+      { word: "exhausted",    query: "sleeping worker resting figure" },
+      { word: "in love",      query: "couple garden embrace flowers" },
+      { word: "bitter",       query: "poverty old age figure alone" },
+      { word: "awestruck",    query: "vast landscape mountain waterfall" },
+      { word: "lost",         query: "wanderer fog mist figure landscape" },
+      { word: "euphoric",     query: "dance figures color joy" },
+      { word: "ashamed",      query: "figure bowed head shame" },
+      { word: "grateful",     query: "still life table bread fruit" },
+      { word: "numb",         query: "empty room grey light window" },
+      { word: "jealous",      query: "figures watching longing desire" },
+      { word: "homesick",     query: "distant landscape memory childhood" },
+      { word: "proud",        query: "portrait noble dignified figure" },
+      { word: "humiliated",   query: "crowd mocking figures scene" },
+      { word: "curious",      query: "figures examining objects wonder" },
+      { word: "devastated",   query: "shipwreck disaster figures ruins" },
+      { word: "content",      query: "courtyard sunlight domestic scene" },
+      { word: "hollow",       query: "empty street shadows architecture" },
+      { word: "desperate",    query: "figures clinging raft sea" },
+      { word: "alive",        query: "sunflowers bold color vivid brushwork" },
+      { word: "forgotten",    query: "nocturne mist river bridge grey" },
+      { word: "dangerous",    query: "dramatic shadow figure candlelight" },
+      { word: "suffocated",   query: "figure nightmare pressing weight" },
+      { word: "electric",     query: "fire sky dramatic clouds light" },
+      { word: "small",        query: "vast landscape tiny figure" },
+      { word: "hollow",       query: "abandoned room empty chair" }
     ];
 
-    const FALLBACK_ARTISTS = [
-      "Rembrandt", "Johannes Vermeer", "Vincent van Gogh",
-      "Caspar David Friedrich", "Mary Cassatt"
+    // Remove duplicate words
+    const seen = new Set();
+    const UNIQUE_MOODS = ALL_MOODS.filter(m => {
+      if (seen.has(m.word)) return false;
+      seen.add(m.word);
+      return true;
+    });
+
+    const FALLBACK_QUERIES = [
+      "landscape figure solitude",
+      "portrait interior light",
+      "still life table window"
     ];
 
     let selectedMoods = [];
-    let lastSearchTerms = [];
+    let lastMoods = [];
 
     function shuffle(arr) {
       return [...arr].sort(() => Math.random() - 0.5);
@@ -263,7 +238,7 @@
       const grid = document.getElementById('mood-grid');
       grid.innerHTML = '';
       selectedMoods = [];
-      const picked = shuffle(ALL_MOODS).slice(0, 5);
+      const picked = shuffle(UNIQUE_MOODS).slice(0, 5);
       picked.forEach(mood => {
         const btn = document.createElement('button');
         btn.className = 'mood-btn';
@@ -283,14 +258,14 @@
     }
 
     function getMoodEntry(word) {
-      const match = ALL_MOODS.find(m => m.word.toLowerCase() === word.toLowerCase());
+      const match = UNIQUE_MOODS.find(m => m.word.toLowerCase() === word.toLowerCase());
       if (match) return match;
-      const artist = FALLBACK_ARTISTS[Math.floor(Math.random() * FALLBACK_ARTISTS.length)];
-      return { word, artist };
+      const q = FALLBACK_QUERIES[Math.floor(Math.random() * FALLBACK_QUERIES.length)];
+      return { word, query: q };
     }
 
-    async function searchMetForPainting(artist) {
-      const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&medium=Paintings&q=${encodeURIComponent(artist)}`;
+    async function searchMetForPainting(query) {
+      const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&medium=Paintings&q=${encodeURIComponent(query)}`;
       const res = await fetch(url);
       const data = await res.json();
       if (!data.objectIDs || data.objectIDs.length === 0) return null;
@@ -304,12 +279,17 @@
     }
 
     async function showPainting(moods) {
-      const painting = await searchMetForPainting(moods[0].artist);
-      if (!painting) throw new Error("Couldn't find a painting. Try a different mood.");
+      // combine queries from all selected moods for a richer search
+      const combinedQuery = moods.map(m => m.query).join(' ');
+      let painting = await searchMetForPainting(combinedQuery);
 
-      const moodStr = moods.map(m => m.word).join(" and ");
-      const artist = painting.artistDisplayName || "An unknown artist";
-      const date = painting.objectDate || "an unknown date";
+      // fallback to first mood's query alone if combined returns nothing
+      if (!painting) painting = await searchMetForPainting(moods[0].query);
+      if (!painting) throw new Error("Couldn't find a painting. Try different moods.");
+
+      const moodStr = moods.map(m => m.word).join(' and ');
+      const artist = painting.artistDisplayName || 'An unknown artist';
+      const date = painting.objectDate || 'an unknown date';
 
       document.getElementById('mood-display').textContent = moodStr;
       document.getElementById('painting-img').src = painting.primaryImageSmall;
@@ -334,7 +314,7 @@
         return;
       }
 
-      lastSearchTerms = allSelected;
+      lastMoods = allSelected;
       document.getElementById('loading').style.display = 'block';
       document.getElementById('loading').textContent = 'Looking...';
       document.getElementById('error').style.display = 'none';
@@ -350,12 +330,12 @@
     }
 
     async function tryAgain() {
-      if (lastSearchTerms.length === 0) return;
+      if (lastMoods.length === 0) return;
       document.getElementById('result').style.display = 'none';
       document.getElementById('loading').style.display = 'block';
       document.getElementById('loading').textContent = 'Finding another...';
       try {
-        await showPainting(lastSearchTerms);
+        await showPainting(lastMoods);
       } catch (err) {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('error').style.display = 'block';

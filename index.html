@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Temperature Drift</title>
+  <title>Painted Near You</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="container">
-    <h1>Temperature Drift</h1>
-    <p id="subtitle">Enter your address. See how much today's temperature has drifted from what it used to be — and the painting that holds that feeling.</p>
+    <h1>Painted Near You</h1>
+    <p id="subtitle">Enter your address. Find a painting of something close to where you are.</p>
 
     <input type="text" id="address" placeholder="Enter your address or city" />
     <button onclick="run()">Find my painting</button>
 
-    <div id="loading" style="display:none">Looking up your location and temperature...</div>
+    <div id="loading" style="display:none">Looking up your location...</div>
     <div id="error" style="display:none"></div>
 
     <div id="result" style="display:none">
-      <div id="delta-display"></div>
+      <div id="location-display"></div>
       <div id="painting-container">
         <img id="painting-img" src="" alt="" />
         <div id="painting-title"></div>
         <div id="painting-artist"></div>
+        <div id="painting-date"></div>
         <div id="painting-caption"></div>
       </div>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
